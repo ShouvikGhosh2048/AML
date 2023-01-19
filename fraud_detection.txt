@@ -1,0 +1,73 @@
+Problem Framing:
+    Current State:
+        Qualitative: Too much fraud => monetary loss + loss of trust from customers => reduced net profit
+        Quantitative: 10% more fraud => 7% monetary loss
+    Objectives:
+        Qualitative:
+            +) Build a model to detect fraudulent transactions
+            +) Detect fraudulent transactions => prevent monetary loss => improve net profit
+        Quantitative: Reduce fraud from 20% to 10% => increase profits by 7%
+    Benifit/Cost Tradeoff and Prioratization:
+        Qualitative:
+            Cost of errors:
+                FN (fraud labelled as not fraud) => Very bad as we don't catch a fraud => monetary loss due to fraud
+                FP (not fraud labelled as fraud) => Bad user experience as we investigate their transaction / prevent an automatic transaction => reduces user satisfaction => reduces profit
+            Benifits of correct predictions:
+                TP (Correctly identifying fraud) => Good as we prevent a fraud => prevent monetary losses
+                TN (Correctly identifying not a fraud) => Good as we prevent labelling a transaction as fraud and prevent user discomfort
+        Quantitative:
+            1% TP => - 0.7% monetary loss => + 0.7% profit
+            1% FP => 1% bad experiences => - 0.5% user engagement => -0.3 % less revenue
+            1% FN => + 0.7% monetary loss => - 0.7% profit
+            1% TN => no significant impact of revenue
+    Constraints:
+        Qualitative: Can afford only a small percent of FP => small percent of bad user experience => limited loss of revenue
+        Quantitative: At most 3% FP => 3% bad experience => - 1.5% user engagement => - 0.9 % revenue loss, acceptable for expected + 1.4% in profit
+    Desired state:
+        Qualitative:
+            Benefit: Significantly less fraud => decreased losses + user trust => increased profits
+            Cost: Very few false positive => limited risk of bad user experience => limited risk to revenue
+        Quantitative:
+            2% increase in fraud detection => 1.4% increase in net profit
+            At most 3% false positive => -0.9% revenue loss
+
+Why ML:
+    Best non-ML alternative:
+        Qualitative: Use transaction statistics, whether transaction is on the less frequently used account, is amount too large, etc => too many FP and FN => bad user experience + monetary loss due to fraud => loss of revenue
+        Quantitative: 10% FP and 25% FN => not catching enough frauds, and complaints due to bad user experience => 10% revenue loss risk
+    ML value proposition hypothesis:
+        Qualitative: Much fewer false positives and false negatives => better fraud detection => better profit
+        Quantitative: 2% FP, 1% FN => 50% decrease in spam => 3% increase in revenue
+    ML feasability:
+        Qualitative:
+            Data: historic records of transactions available
+            Model: State of the art review suggests promising candidates are available
+        Quantititative:
+            Data: Around 20,000 samples
+            Model: State of the art solutions with 2% FP, 1% FN.
+
+ML Solution Design:
+    Data:
+        Choices:
+            (labelled) transaction data
+        Metrics:
+            Label imbalance
+        Experiment:
+            Randomized 70/15/15 train/validation/test split
+    Model:
+        Choices: pr(fraud)
+        Metrics: AUCPR (precision recall curve)
+        Experiment:
+            rule base heuristic
+            tf-idf + logisitic regression
+            tf-idf + random forest
+
+            train these models using train data, validate and tune using validation data, select model with best AUCPR on test data
+    Action:
+        Choices: if pr(fraud) > treshold: prevent transaction, send for manual check if required
+        Metrics: precision, recall, confusion matrix
+        Experiment: Choose a treshold to maximize the recall subject to precision > 90%
+    Reward: 
+        Choices: Decrease of fraud, Cost of misclassification
+        Metrics: % decrease in fraud, % increase in profit
+        Experiment: Shadow test
