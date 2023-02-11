@@ -1,0 +1,4 @@
+[core]
+    remote = aml
+['remote "aml"']
+    url = ../../../AMLRemote

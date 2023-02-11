@@ -1,0 +1,5 @@
+outs:
+- md5: 23103fac3366dce1a00179f42febfba5.dir
+  size: 483775
+  nfiles: 2
+  path: smsspamcollection
