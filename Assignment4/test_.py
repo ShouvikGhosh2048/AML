@@ -1,5 +1,4 @@
-# I've used https://www.freecodecamp.org/news/how-to-dockerize-a-flask-app/ as 
-# a resource for assignment 4, as mentioned in the assignment.
+# I have used https://www.freecodecamp.org/news/how-to-dockerize-a-flask-app/ as a resource for assignment 4, as mentioned in the assignment.
 
 import csv
 from sklearn.feature_extraction.text import TfidfVectorizer
