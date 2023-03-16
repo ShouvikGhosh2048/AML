@@ -51,3 +51,22 @@ def test_flask():
         response_json = json.loads(response)
         assert 'prediction' in response_json and 'propensity' in response_json
     process.terminate()
+
+def test_docker():
+    process = Popen(["docker", "build", "--tag", "aml_assignment_container", "."])
+    process.wait()
+    process = Popen(["docker", "run", "-d", "-p", "5000:5000", "--name", "aml_assignment_image", "aml_assignment_container"])
+    process.wait()
+    time.sleep(10)
+    data = urllib.parse.urlencode({'text': 'Hi'})
+    data = data.encode('ascii')
+    with urllib.request.urlopen("http://127.0.0.1:5000/score", data) as f:
+        response = f.read().decode('utf-8')
+        response_json = json.loads(response)
+        assert 'prediction' in response_json and 'propensity' in response_json
+    process = Popen(["docker", "stop", "aml_assignment_image"])
+    process.wait()
+    process = Popen(["docker", "rm", "aml_assignment_image"])
+    process.wait()
+    process = Popen(["docker", "rmi", "aml_assignment_container"])
+    process.wait()

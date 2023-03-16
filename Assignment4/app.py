@@ -7,7 +7,7 @@ from score import score
 # Model used for testing.
 train_x = []
 train_y = []
-with open('../Assignment2/train.csv', newline='') as f:
+with open('train.csv', newline='') as f:
     reader = csv.reader(f, delimiter=',', quotechar='|')
     for [line, label] in reader:
         train_x.append(line)

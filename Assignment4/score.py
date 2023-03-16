@@ -2,7 +2,8 @@ import csv
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 train_x = []
-with open('../Assignment2/train.csv', newline='') as f:
+# I've taken train.csv from assignment 2.
+with open('train.csv', newline='') as f:
     reader = csv.reader(f, delimiter=',', quotechar='|')
     for [line, _] in reader:
         train_x.append(line)
@@ -10,7 +11,7 @@ with open('../Assignment2/train.csv', newline='') as f:
 vectorizer = TfidfVectorizer()
 vectorizer.fit_transform(train_x)
 
-def score(text: str, model, threshold:float) -> tuple[bool, float]:
+def score(text, model, threshold):
     data = [text]
     data = vectorizer.transform(data)
     spam_probability = model.predict_proba(data)[0][1]
