@@ -1,5 +1,5 @@
 # I have used https://www.freecodecamp.org/news/how-to-dockerize-a-flask-app/ as a resource for assignment 4, as mentioned in the assignment.
-
+# Test commit for hooks
 import csv
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
