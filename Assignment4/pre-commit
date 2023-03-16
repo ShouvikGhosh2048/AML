@@ -1,0 +1,17 @@
+#!/bin/sh
+current_branch=`git branch | grep '*' | sed 's/* //'`
+
+if [ "$current_branch" = "main" ]; then
+    echo "Running tests."
+    cd Assignment4
+    py -m pytest
+    if [ $? -eq 0 ]; then
+        echo "Tests passed."
+        cd ..
+        exit 0
+    else
+        echo "Some tests failed."
+        cd ..
+        exit 1
+    fi
+fi
